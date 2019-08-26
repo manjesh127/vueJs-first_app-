@@ -24,11 +24,9 @@ export default {
     axios
       .get(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
       .then(res => {
-        console.log("response", res);
         this.posts = res.data;
       })
       .catch(e => {
-        console.log("error", e);
         this.errors.push(e);
       });
   }
