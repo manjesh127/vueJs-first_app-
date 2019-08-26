@@ -2,7 +2,7 @@
   <div class="home">
     <AddPost v-on:add-post="addPost" />
     <!-- customHtml tags -->
-    <PostList v-bind:posts="posts" />
+    <PostList v-on:del-post="deletePost" v-bind:posts="posts" />
   </div>
 </template>
 
@@ -25,11 +25,21 @@ export default {
       const { title, body } = newPost;
       axios
         .post(`https://jsonplaceholder.typicode.com/posts`, {
-          title: title,
-          body: body
+          title,
+          body
         })
-        .then()
-        .catch();
+        .then(res => (this.posts = [...this.posts, res.data]))
+        .catch(err => console.log("error", err));
+    },
+    deletePost(id) {
+      axios
+        .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        .then(res=>{
+          this.posts = this.posts.filter(post=>post.id !=id)
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
   created() {
