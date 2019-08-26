@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <AddPost />
+    <AddPost v-on:add-post="addPost" />
     <!-- customHtml tags -->
     <PostList v-bind:posts="posts" />
   </div>
@@ -19,6 +19,18 @@ export default {
       posts: [],
       errors: []
     };
+  },
+  methods: {
+    addPost(newPost) {
+      const { title, body } = newPost;
+      axios
+        .post(`https://jsonplaceholder.typicode.com/posts`, {
+          title: title,
+          body: body
+        })
+        .then()
+        .catch();
+    }
   },
   created() {
     axios
